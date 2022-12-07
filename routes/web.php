@@ -18,4 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('conference', ConferenceController::class)->only(['index']);
+Route::resource('conference', ConferenceController::class)->only(['index', 'show', 'store', 'create']);
+
+Route::get('conference/create', [ConferenceController::class, 'create'])->name('conference.create');
+Route::post('conference/store', [ConferenceController::class, 'store'])->name('conference.store');
