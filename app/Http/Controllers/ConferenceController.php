@@ -28,6 +28,11 @@ class ConferenceController extends Controller
         return view('conference.index', ['articles' => Conference::Get()]);
     }
 
+    public function guest(): view
+    {
+        return view('conference.guest', ['articles' => Conference::Get()]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -53,7 +58,7 @@ class ConferenceController extends Controller
 
         $conference->save();
 
-        return redirect()->route('conference.show', ['id' => $conference->id]);
+        return redirect()->route('conference.show', ['conference' => $conference->id]);
     }
 
     /**
@@ -70,12 +75,11 @@ class ConferenceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        return view('conference.edit');
     }
 
     /**
@@ -87,7 +91,11 @@ class ConferenceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Conference::where('conference', $id)->
+        update(['title'=>$request->input('title')])->
+        update(['content'=>$request->input('content')]);
+
+        return view('conference.index', ['articles' => Conference::Get()]);
     }
 
     /**
@@ -98,6 +106,8 @@ class ConferenceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Conference::where('conference', $id)->delete();
+
+        return view('conference.index', ['articles' => Conference::Get()]);
     }
 }
