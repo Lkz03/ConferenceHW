@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    @foreach($articles as $article)
-        <h1>{{ $article['title'] }}</h1>
-        <p>{{ $article['content'] }}</p>
+    @foreach($conferences as $conference)
+        <h1>{{ $conference['title'] }}</h1>
+        <p>{{ $conference['content'] }}</p>
     @endforeach
 @endsection

@@ -7,17 +7,6 @@ use Illuminate\Http\Request;
 
 class ConferenceController extends Controller
 {
-    protected array $articles = [
-        [
-            'title' => 'das is title',
-            'content' => 'some text'
-        ],
-        [
-            'title' => 'das is title but different',
-            'content' => 'some text'
-        ]
-    ];
-
     /**
      * Display a listing of the resource.
      *
@@ -25,12 +14,12 @@ class ConferenceController extends Controller
      */
     public function index()
     {
-        return view('conference.index', ['articles' => Conference::Get()]);
+        return view('conference.index', ['conferences' => Conference::Get()]);
     }
 
     public function guest(): view
     {
-        return view('conference.guest', ['articles' => Conference::Get()]);
+        return view('conference.guest', ['conferences' => Conference::Get()]);
     }
 
     /**
@@ -69,7 +58,7 @@ class ConferenceController extends Controller
      */
     public function show($id)
     {
-        return view('conference.show', ['articles' => Conference::Get()->where('id', $id)]);
+        return view('conference.show', ['conferences' => Conference::Get()->where('id', $id)]);
     }
 
     /**
@@ -77,9 +66,9 @@ class ConferenceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        return view('conference.edit');
+        return view('conference.edit',  ['conference' => Conference::findOrFail($id)]);
     }
 
     /**
@@ -91,11 +80,15 @@ class ConferenceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Conference::where('conference', $id)->
-        update(['title'=>$request->input('title')])->
-        update(['content'=>$request->input('content')]);
+//        Conference::where('conference', $id)->
+//        update(['title'=>$request->input('title')])->
+//        update(['content'=>$request->input('content')]);
 
-        return view('conference.index', ['articles' => Conference::Get()]);
+        $conference = Conference::findOrFail($id);
+        $conference->fill($request->post());
+        $conference->save();
+
+        return view('conference.index', ['conferences' => Conference::Get()]);
     }
 
     /**
@@ -106,8 +99,9 @@ class ConferenceController extends Controller
      */
     public function destroy($id)
     {
-        Conference::where('conference', $id)->delete();
+        $conference = Conference::findOrFail($id);
+        $conference->delete();
 
-        return view('conference.index', ['articles' => Conference::Get()]);
+        return back();
     }
 }

@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Conference extends Model
 {
     use HasFactory;
+
+    public $fillable = [
+        'title','content'
+    ];
 }

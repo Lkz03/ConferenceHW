@@ -23,11 +23,6 @@ Route::resource('login', LoginController::class)->only(['loginUser', 'index']);
 
 Route::get('loginUser', [LoginController::class, 'loginUser'])->name('loginUser');
 
-Route::resource('conference', ConferenceController::class)->only(['index', 'guest', 'show', 'store', 'create', 'edit', 'update', 'destroy']);
+Route::resource('conference', ConferenceController::class);
 
-Route::delete('conference/destroy', [ConferenceController::class, 'destroy'])->name('conference.destroy');
-Route::get('conference/create', [ConferenceController::class, 'create'])->name('conference.create');
 Route::get('conference/guest', [ConferenceController::class, 'guest'])->name('conference.guest');
-Route::post('conference/store', [ConferenceController::class, 'store'])->name('conference.store');
-Route::get('conference/edit', [ConferenceController::class, 'edit'])->name('conference.edit');
-Route::get('conference/update', [ConferenceController::class, 'update'])->name('conference.update');
