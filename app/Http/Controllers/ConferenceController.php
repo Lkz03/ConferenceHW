@@ -17,11 +17,6 @@ class ConferenceController extends Controller
         return view('conference.index', ['conferences' => Conference::Get()]);
     }
 
-    public function guest(): view
-    {
-        return view('conference.guest', ['conferences' => Conference::Get()]);
-    }
-
     /**
      * Show the form for creating a new resource.
      *

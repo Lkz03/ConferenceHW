@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ConferenceController;
-use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,14 +15,10 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::resource('login', LoginController::class)->only(['loginUser', 'index']);
-
-Route::get('loginUser', [LoginController::class, 'loginUser'])->name('loginUser');
-
 Route::resource('conference', ConferenceController::class);
 
-Route::get('conference/guest', [ConferenceController::class, 'guest'])->name('conference.guest');
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login.form');
+Route::post('login', [LoginController::class, 'login'])->name('login');
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
